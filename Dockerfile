@@ -50,4 +50,7 @@ VOLUME ["/remix/app"]
 EXPOSE 8080
 EXPOSE 65520
 
+RUN sed -i s/", loopback"//g /remix/remix-ide/node_modules/remixd/src/websocket.js
+RUN sed -i s/127.0.0.1/0.0.0.0/g /remix/remix-ide/bin/remix-ide
+
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
