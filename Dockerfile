@@ -32,8 +32,7 @@ RUN /bin/bash -l -c "\
   && nvm alias default $NODE_VERSION \
   && nvm use default \
   && npm config set python /usr/bin/python --global \
-  && npm config set python /usr/bin/python \
-  && npm install typescript@^3.7.4 -g"
+  && npm config set python /usr/bin/python"
 
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
