@@ -1,0 +1,28 @@
+name: Remix Docker Builder
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+    - 'VERSION'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --build-arg ideversion=$(cat VERSION) --tag unibtc/remix-docker:$(cat VERSION) --tag unibtc/remix-docker:latest
+
+    - name: Log into registry
+      run: echo "${{ secrets.HUB_TOKEN }}" | docker login -u ${{ secrets.HUB_USER }} --password-stdin
+
+    - name: Push image
+      run: |
+          docker push unibtc/remix-docker:$(cat VERSION)
+          docker push unibtc/remix-docker:latest
